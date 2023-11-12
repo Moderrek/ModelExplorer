@@ -16,6 +16,9 @@
     <Filter Include="Resources\Shaders">
       <UniqueIdentifier>{e067b55d-18bf-49a4-86d2-9beabd793ef3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures">
+      <UniqueIdentifier>{5f409c60-9049-4dca-950c-41fd945541e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,12 +39,27 @@
     <ClCompile Include="vao.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="default.frag">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="light.frag">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="light.vert">
       <Filter>Resources\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -58,5 +76,16 @@
     <ClInclude Include="vao.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="texture.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="example_texture.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
