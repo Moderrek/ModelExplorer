@@ -147,32 +147,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="ebo.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="vao.cpp" />
-    <ClCompile Include="vbo.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
-    <None Include="light.frag" />
-    <None Include="light.vert" />
+    <None Include="shaders\default.frag" />
+    <None Include="shaders\default.vert" />
+    <None Include="shaders\light.frag" />
+    <None Include="shaders\light.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.hpp" />
-    <ClInclude Include="ebo.hpp" />
-    <ClInclude Include="shader.hpp" />
-    <ClInclude Include="texture.hpp" />
-    <ClInclude Include="vao.hpp" />
-    <ClInclude Include="vbo.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="EBO.hpp" />
+    <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Texture.hpp" />
+    <ClInclude Include="VAO.hpp" />
+    <ClInclude Include="VBO.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="example_texture.png" />
+    <Image Include="textures\dirt_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="textures\dirt_ao.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
