@@ -52,9 +52,6 @@ void Mesh::draw(const Shader& shader, Camera& camera, glm::mat4 matrix, const gl
   rot = mat4_cast(rotation);
   sca = glm::scale(sca, scale);
 
-  constexpr float angle = glm::radians(180.0f);
-  rot = rotate(rot, angle, glm::vec3{1.0f, 0.0f, 0.0f});
-
   // Push the matrices to the vertex shader
   glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), "translation"), 1, GL_FALSE, glm::value_ptr(trans));
   glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), "rotation"), 1, GL_FALSE, glm::value_ptr(rot));
