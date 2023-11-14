@@ -16,7 +16,19 @@ std::string get_file_contents(const char* file_name) {
   throw errno;
 }
 
+inline bool is_file_exists(const char* file_name) {
+  struct stat buffer;
+  return stat (file_name, &buffer) == 0;
+}
+
 Shader::Shader(const char* vertex_file, const char* fragment_file) {
+  if (!is_file_exists(vertex_file)) {
+    throw std::invalid_argument{std::string{"Cannot find vertex shader file: "} + vertex_file};
+  }
+  if (!is_file_exists(fragment_file)) {
+    throw std::invalid_argument{std::string{"Cannot find fragment shader file: "} + vertex_file};
+  }
+  
   const std::string vertex_code = get_file_contents(vertex_file);
   const std::string fragment_code = get_file_contents(fragment_file);
 

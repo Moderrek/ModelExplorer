@@ -6,6 +6,7 @@
 #include <sstream>
 
 std::string get_file_contents(const char* file_name);
+inline bool is_file_exists(const char* file_name);
 
 class Shader {
   GLuint id_;

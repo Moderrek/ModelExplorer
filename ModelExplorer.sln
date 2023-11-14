@@ -21,6 +21,7 @@ Global
 		{85C3567C-F6F1-445F-B3E2-4515BADC46C9}.Release|x64.Build.0 = Release|x64
 		{85C3567C-F6F1-445F-B3E2-4515BADC46C9}.Release|x86.ActiveCfg = Release|Win32
 		{85C3567C-F6F1-445F-B3E2-4515BADC46C9}.Release|x86.Build.0 = Release|Win32
+		{85C3567C-F6F1-445F-B3E2-4515BADC46C9}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,18 +15,20 @@ uniform vec3 lightPos;
 uniform vec3 camPos;
 
 vec4 point_light() {
+    float ambient = 0.2f;
+    float specularLight = 0.5f;
+    
     vec3 light_vec = lightPos - currentPos;
     float dist = length(light_vec);
     float a = 3.0f;
     float b = 0.7f;
     float inten = 1.0f / (a * dist * dist + b * dist + 1.0f);
 
-    float ambient = 0.2f;
+    
     vec3 normal = normalize(Normal);
     vec3 light_direction = normalize(light_vec);
 
     float diffuse = max(dot(normal, light_direction), 0.0f);
-    float specularLight = 0.5f;
     vec3 viewDirection = normalize(camPos - currentPos);
     vec3 reflectionDirection = reflect(-light_direction, normal);
     float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16.0f);
@@ -35,16 +37,13 @@ vec4 point_light() {
 }
 
 vec4 directional_light() {
-    // ambient lighting
     float ambient = 0.20f;
+    float specularLight = 0.50f;
 
-    // diffuse lighting
     vec3 normal = normalize(Normal);
     vec3 lightDirection = normalize(vec3(1.0f, 1.0f, 0.0f));
     float diffuse = max(dot(normal, lightDirection), 0.0f);
-
-    // specular lighting
-    float specularLight = 0.50f;
+    
     vec3 viewDirection = normalize(camPos - currentPos);
     vec3 reflectionDirection = reflect(-lightDirection, normal);
     float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16);
@@ -54,17 +53,18 @@ vec4 directional_light() {
 }
 
 vec4 spot_light() {
+    float ambient = 0.2f;
     float outerCone = 0.9f;
     float innerCone = 0.95f;
+    float specularLight = 0.5f;
 
     vec3 light_vec = lightPos - currentPos;
 
-    float ambient = 0.2f;
+    
     vec3 normal = normalize(Normal);
     vec3 light_direction = normalize(light_vec);
 
     float diffuse = max(dot(normal, light_direction), 0.0f);
-    float specularLight = 0.5f;
     vec3 viewDirection = normalize(camPos - currentPos);
     vec3 reflectionDirection = reflect(-light_direction, normal);
     float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16.0f);

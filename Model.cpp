@@ -225,6 +225,7 @@ std::vector<Vertex> Model::assemble_vertices(const std::vector<glm::vec3>& posit
 }
 
 Model::Model(const char* file): file_(file) {
+  if (!is_file_exists(file)) throw std::invalid_argument{std::string{"Cannot find model .gltf file: "} + file};
   std::string text = get_file_contents(file);
   json_ = json::parse(text);
   data_ = get_data();
