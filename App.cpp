@@ -1,5 +1,10 @@
 ﻿#include "App.hpp"
 
+/*
+ * glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); -> wireframe
+ * glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); -> shaded
+ */
+
 App::App(const int window_width, const int window_height, const char* title): window_(nullptr), shader_program_(nullptr) {
   window_width_ = window_width;
   window_height_ = window_height;
@@ -9,6 +14,7 @@ App::App(const int window_width, const int window_height, const char* title): wi
 App::~App() {
   delete shader_program_;
   delete shader_outlining_program_;
+  delete shader_grass_program_;
 }
 
 void App::init() {
@@ -42,7 +48,8 @@ void App::init() {
   std::cout << "Compiling shaders runtime.." << std::endl;
   try {
     shader_program_ = new Shader{"shaders/default.vert", "shaders/default.frag"};
-    // shader_outlining_program_ = new Shader{"shaders/outlining.vert", "shaders/outlining.frag"};
+    shader_outlining_program_ = new Shader{"shaders/outlining.vert", "shaders/outlining.frag"};
+    shader_grass_program_ = new Shader{"shaders/grass.vert", "shaders/grass.frag"};
   }  catch (const std::invalid_argument& exception) {
     std::cerr << "Exception: " << exception.what() << std::endl;
     glfwDestroyWindow(window_);
@@ -58,6 +65,9 @@ void App::init() {
   shader_program_->activate();
   glUniform4f(glGetUniformLocation(shader_program_->get_id(), "lightColor"), light_color.x, light_color.y, light_color.z, light_color.w);
   glUniform3f(glGetUniformLocation(shader_program_->get_id(), "lightPos"), light_pos.x, light_pos.y, light_pos.z);
+  shader_grass_program_->activate();
+  glUniform4f(glGetUniformLocation(shader_grass_program_->get_id(), "lightColor"), light_color.x, light_color.y, light_color.z, light_color.w);
+  glUniform3f(glGetUniformLocation(shader_grass_program_->get_id(), "lightPos"), light_pos.x, light_pos.y, light_pos.z);
 
   std::cout << "Enabling depth buffer.." << std::endl;
   glEnable(GL_DEPTH_TEST);
@@ -77,23 +87,45 @@ void App::run() const {
   Camera camera{window_width_, window_height_, glm::vec3{0.0f, 0.0f, 2.0f}};
   std::cout << "Loading external model.." << std::endl;
   Model ground {"models/ground/scene.gltf"};
-  Model trees {"models/trees/scene.gltf"};
-  Model sword {"models/sword/scene.gltf"};
+  Model grass {"models/grass/scene.gltf"};
+  // Model sword {"models/trees/scene.gltf"};
+
+  double previous_time = 0;
+  double current_time = 0;
+  double timer = 0;
+  unsigned int counter = 0;
+  double previous_time_delta = 0;
+
+  // Disable V-Sync
+  glfwSwapInterval(0);
   
   std::cout << "Successfully started main loop." << std::endl;
   // Main while loop
   while (!glfwWindowShouldClose(window_)) {
+    current_time = glfwGetTime();
+    timer = current_time - previous_time;
+    counter += 1;
+    if (timer >= 1.0 / 30.0) {
+      std::string fps = std::to_string((1.0 / timer) * counter);
+      std::string ms = std::to_string((timer / counter) * 1000);
+      std::string new_title = "Model Explorer - " + fps + " FPS / " + ms + " ms";
+      glfwSetWindowTitle(window_, new_title.c_str());
+      previous_time = current_time;
+      counter = 0;
+    }
+    float delta_time = static_cast<float>(current_time) - static_cast<float>(previous_time_delta);
+    previous_time_delta = current_time;
+    
     glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
     // Clean back buffer and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     // Handle camera inputs
-    camera.inputs(window_);
+    camera.inputs(window_, delta_time);
     // Updates and exports the camera  matrix to the Vertex Shader
     camera.update_matrix(80.0f, 0.1f, 250.0f);
     // Draw meshes
-    sword.draw(*shader_program_, camera);
     ground.draw(*shader_program_, camera);
-    trees.draw(*shader_program_, camera);
+    grass.draw(*shader_grass_program_, camera);
     // Swap the back buffer with the front buffer
     glfwSwapBuffers(window_);
     glfwPollEvents();
@@ -101,6 +133,7 @@ void App::run() const {
   std::cout << "Deleting shaders.." << std::endl;
   shader_program_->Delete();
   shader_outlining_program_->Delete();
+  shader_grass_program_->Delete();
   std::cout << "Deleting window.." << std::endl;
   glfwDestroyWindow(window_);
   glfwTerminate();

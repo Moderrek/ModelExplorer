@@ -44,12 +44,11 @@ void Mesh::draw(const Shader& shader, Camera& camera, glm::mat4 matrix, const gl
 
   // Initialize matrices
   auto trans = glm::mat4(1.0f);
-  auto rot = glm::mat4(1.0f);
   auto sca = glm::mat4(1.0f);
 
   // Transform the matrices to their correct form
   trans = translate(trans, translation);
-  rot = mat4_cast(rotation);
+  auto rot = mat4_cast(rotation);
   sca = glm::scale(sca, scale);
 
   // Push the matrices to the vertex shader

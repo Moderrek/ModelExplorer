@@ -23,14 +23,14 @@ public:
   int width;
   int height;
 
-  float speed = 0.01f;
+  float speed = 10.0f;
   float sensitivity = 100.0f;
 
   Camera(int width, int height, glm::vec3 position);
 
   void update_matrix(float fov_deg, float near_plane, float far_plane);
   void matrix(const Shader& shader, const char* uniform);
-  void inputs(GLFWwindow* window);
+  void inputs(GLFWwindow* window, const float delta_time);
 };
 
 #endif

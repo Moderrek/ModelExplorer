@@ -15,6 +15,7 @@ class App {
   GLFWwindow* window_;
   Shader* shader_program_;
   Shader* shader_outlining_program_;
+  Shader* shader_grass_program_;
   
   int window_width_;
   int window_height_;

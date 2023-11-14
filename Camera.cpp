@@ -17,24 +17,24 @@ void Camera::matrix(const Shader& shader, const char* uniform) {
   glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), uniform), 1, GL_FALSE, value_ptr(cameraMatrix));
 }
 
-void Camera::inputs(GLFWwindow* window) {
+void Camera::inputs(GLFWwindow* window, const float delta_time) {
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-    Position += speed * Orientation;
+    Position += speed * delta_time * Orientation;
   }
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-    Position += speed * -Orientation;
+    Position += speed * delta_time * -Orientation;
   }
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-    Position += speed * -normalize(cross(Orientation, Up));
+    Position += speed * delta_time * -normalize(cross(Orientation, Up));
   }
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-    Position += speed * normalize(cross(Orientation, Up));
+    Position += speed * delta_time * normalize(cross(Orientation, Up));
   }
   if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-    Position += speed * Up;
+    Position += speed * delta_time * Up;
   }
   if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-    Position += speed * -Up;
+    Position += speed * delta_time * -Up;
   }
   if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);

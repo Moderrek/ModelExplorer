@@ -185,6 +185,10 @@
         <Content Include="models\bunny\metallicRoughness.png" />
         <Content Include="models\bunny\scene.bin" />
         <Content Include="models\bunny\scene.gltf" />
+        <Content Include="models\grass\diffuse.png" />
+        <Content Include="models\grass\scene.bin" />
+        <Content Include="models\grass\scene.gltf" />
+        <Content Include="models\grass\specular.png" />
         <Content Include="models\grindstone\scene.bin" />
         <Content Include="models\grindstone\scene.gltf" />
         <Content Include="models\grindstone\textures\Main_baseColor.jpeg" />
@@ -207,8 +211,15 @@
         <Content Include="models\trees\scene.bin" />
         <Content Include="models\trees\scene.gltf" />
         <Content Include="models\trees\specular.png" />
+        <Content Include="models\windows\diffuse.png" />
+        <Content Include="models\windows\scene.bin" />
+        <Content Include="models\windows\scene.gltf" />
+        <Content Include="shaders\grass.frag" />
+        <Content Include="shaders\grass.vert" />
         <Content Include="shaders\outlining.frag" />
         <Content Include="shaders\outlining.vert" />
+        <Content Include="shaders\unlit.frag" />
+        <Content Include="shaders\unlit.vert" />
         <Content Include="textures\dirt_ao.png"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
