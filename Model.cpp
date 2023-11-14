@@ -1,5 +1,7 @@
 ﻿#include "Model.hpp"
 
+#include <iostream>
+
 void Model::load_mesh(const unsigned int mesh_index) {
   auto primitives = json_["meshes"][mesh_index]["primitives"][0];
   const unsigned int pos_index = primitives["attributes"]["POSITION"];
@@ -110,16 +112,18 @@ std::vector<Texture> Model::get_textures() {
       }
     }
     if (skip) continue;
-    if (texture_path.find("baseColor") != std::string::npos) {
+    if (texture_path.find("baseColor") != std::string::npos || texture_path.find("diffuse") != std::string::npos) {
       auto diffuse = Texture{(file_directory + texture_path).c_str(), TEX_TYPE_DIFFUSE, unsigned(loaded_textures_.size())};
       textures.push_back(diffuse);
       loaded_textures_.push_back(diffuse);
       loaded_textures_name_.push_back(texture_path);
+      std::cout << "Loaded color texture " << file_ << texture_path << std::endl;
     } else if (texture_path.find("metallicRoughness") != std::string::npos) {
       auto specular = Texture{(file_directory + texture_path).c_str(), TEX_TYPE_SPECULAR, unsigned(loaded_textures_.size())};
       textures.push_back(specular);
       loaded_textures_.push_back(specular);
       loaded_textures_name_.push_back(texture_path);
+      std::cout << "Loaded metallic/roughness texture " << file_ << texture_path << std::endl;
     }
   }
   return textures;

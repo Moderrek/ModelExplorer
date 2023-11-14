@@ -49,7 +49,7 @@ void App::init() {
   }
 
   constexpr auto light_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  constexpr auto light_pos = glm::vec3(0.5f, 0.5f, 0.5f);
+  constexpr auto light_pos = glm::vec3(0.5f, 10.5f, 0.5f);
   auto light_model = translate(glm::mat4(1.0f), light_pos);
   
   std::cout << "Setup lighting.." << std::endl;
@@ -67,12 +67,14 @@ void App::run() const {
   std::cout << "Creating camera.." << std::endl;
   Camera camera{window_width_, window_height_, glm::vec3{0.0f, 0.0f, 2.0f}};
   std::cout << "Loading external model.." << std::endl;
-  Model model{"models/map/scene.gltf"};
+  Model ground {"models/ground/scene.gltf"};
+  Model trees {"models/trees/scene.gltf"};
+  Model sword {"models/sword/scene.gltf"};
   
   std::cout << "Successfully started main loop." << std::endl;
   // Main while loop
   while (!glfwWindowShouldClose(window_)) {
-    glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
+    glClearColor(0.85f, 0.85f, 0.90f, 1.0f);
     // Clean back buffer and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // Handle camera inputs
@@ -80,7 +82,9 @@ void App::run() const {
     // Updates and exports the camera  matrix to the Vertex Shader
     camera.update_matrix(80.0f, 0.1f, 250.0f);
     // Draw meshes
-    model.draw(*shader_program_, camera);
+    sword.draw(*shader_program_, camera);
+    ground.draw(*shader_program_, camera);
+    trees.draw(*shader_program_, camera);
     // Swap the back buffer with the front buffer
     glfwSwapBuffers(window_);
     glfwPollEvents();

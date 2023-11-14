@@ -190,6 +190,10 @@
         <Content Include="models\grindstone\textures\Main_baseColor.jpeg" />
         <Content Include="models\grindstone\textures\Main_metallicRoughness.png" />
         <Content Include="models\grindstone\textures\Main_normal.png" />
+        <Content Include="models\ground\diffuse.png" />
+        <Content Include="models\ground\scene.bin" />
+        <Content Include="models\ground\scene.gltf" />
+        <Content Include="models\ground\specular.png" />
         <Content Include="models\map\scene.bin" />
         <Content Include="models\map\scene.gltf" />
         <Content Include="models\map\textures\Material.001_baseColor.png" />
@@ -199,6 +203,10 @@
         <Content Include="models\sword\scene.bin" />
         <Content Include="models\sword\scene.gltf" />
         <Content Include="models\sword\textures\Object001_mtl_baseColor.jpeg" />
+        <Content Include="models\trees\diffuse.png" />
+        <Content Include="models\trees\scene.bin" />
+        <Content Include="models\trees\scene.gltf" />
+        <Content Include="models\trees\specular.png" />
         <Content Include="textures\dirt_ao.png"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

@@ -43,14 +43,17 @@ void Mesh::draw(const Shader& shader, Camera& camera, glm::mat4 matrix, const gl
   camera.matrix(shader, "camMatrix");
 
   // Initialize matrices
-  glm::mat4 trans = glm::mat4(1.0f);
-  glm::mat4 rot = glm::mat4(1.0f);
-  glm::mat4 sca = glm::mat4(1.0f);
+  auto trans = glm::mat4(1.0f);
+  auto rot = glm::mat4(1.0f);
+  auto sca = glm::mat4(1.0f);
 
   // Transform the matrices to their correct form
-  trans = glm::translate(trans, translation);
-  rot = glm::mat4_cast(rotation);
+  trans = translate(trans, translation);
+  rot = mat4_cast(rotation);
   sca = glm::scale(sca, scale);
+
+  constexpr float angle = glm::radians(180.0f);
+  rot = rotate(rot, angle, glm::vec3{1.0f, 0.0f, 0.0f});
 
   // Push the matrices to the vertex shader
   glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), "translation"), 1, GL_FALSE, glm::value_ptr(trans));
@@ -59,5 +62,7 @@ void Mesh::draw(const Shader& shader, Camera& camera, glm::mat4 matrix, const gl
   glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), "model"), 1, GL_FALSE, glm::value_ptr(matrix));
 
   // Draw the actual mesh
-  glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, nullptr);
+  VAO::unbind();
+  Texture::unbind();
 }
