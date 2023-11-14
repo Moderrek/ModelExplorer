@@ -1,16 +1,18 @@
 #ifndef EBO_INCLUDED
 #define EBO_INCLUDED
 
+#include <vector>
 #include <glad/glad.h>
 
 class EBO {
-	GLuint id_;
+  GLuint id_;
+
 public:
-	EBO(const GLuint* indices, GLsizeiptr size);
-	GLuint get_id() const;
-	void bind() const;
-	static void unbind();
-	void Delete() const;
+  EBO(const std::vector<GLuint>& indices);
+  GLuint get_id() const;
+  void bind() const;
+  static void unbind();
+  void Delete() const;
 };
 
 #endif
