@@ -89,6 +89,6 @@ vec4 spot_light() {
 }
 
 void main() {
-    float depth = logistic_depth(gl_FragCoord.z, 0.02f, 32.0f);
+    float depth = logistic_depth(gl_FragCoord.z, 0.02f, 64.0f);
     FragColor = directional_light() * (1.0f - depth) + vec4(depth * vec3(0.85f, 0.85f, 0.90f), 1.0f);
 }

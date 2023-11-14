@@ -207,6 +207,8 @@
         <Content Include="models\trees\scene.bin" />
         <Content Include="models\trees\scene.gltf" />
         <Content Include="models\trees\specular.png" />
+        <Content Include="shaders\outlining.frag" />
+        <Content Include="shaders\outlining.vert" />
         <Content Include="textures\dirt_ao.png"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

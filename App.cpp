@@ -8,6 +8,7 @@ App::App(const int window_width, const int window_height, const char* title): wi
 
 App::~App() {
   delete shader_program_;
+  delete shader_outlining_program_;
 }
 
 void App::init() {
@@ -41,6 +42,7 @@ void App::init() {
   std::cout << "Compiling shaders runtime.." << std::endl;
   try {
     shader_program_ = new Shader{"shaders/default.vert", "shaders/default.frag"};
+    shader_outlining_program_ = new Shader{"shaders/outlining.vert", "shaders/outlining.frag"};
   }  catch (const std::invalid_argument& exception) {
     std::cerr << "Exception: " << exception.what() << std::endl;
     glfwDestroyWindow(window_);
@@ -59,6 +61,9 @@ void App::init() {
 
   std::cout << "Enabling depth buffer.." << std::endl;
   glEnable(GL_DEPTH_TEST);
+  std::cout << "Enabling stencil buffer.." << std::endl;
+  glEnable(GL_STENCIL_TEST);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
   
   std::cout << "Successfully initialized." << std::endl;
 }
@@ -67,30 +72,42 @@ void App::run() const {
   std::cout << "Creating camera.." << std::endl;
   Camera camera{window_width_, window_height_, glm::vec3{0.0f, 0.0f, 2.0f}};
   std::cout << "Loading external model.." << std::endl;
-  Model ground {"models/ground/scene.gltf"};
-  Model trees {"models/trees/scene.gltf"};
+  // Model ground {"models/ground/scene.gltf"};
+  // Model trees {"models/trees/scene.gltf"};
   Model sword {"models/sword/scene.gltf"};
   
   std::cout << "Successfully started main loop." << std::endl;
   // Main while loop
   while (!glfwWindowShouldClose(window_)) {
-    glClearColor(0.85f, 0.85f, 0.90f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
     // Clean back buffer and depth buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     // Handle camera inputs
     camera.inputs(window_);
     // Updates and exports the camera  matrix to the Vertex Shader
     camera.update_matrix(80.0f, 0.1f, 250.0f);
     // Draw meshes
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
     sword.draw(*shader_program_, camera);
-    ground.draw(*shader_program_, camera);
-    trees.draw(*shader_program_, camera);
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00);
+    glDisable(GL_DEPTH_TEST);
+    shader_outlining_program_->activate();
+    glUniform1f(glGetUniformLocation(shader_outlining_program_->get_id(), "outlining"), 0.3f);
+    sword.draw(*shader_outlining_program_, camera);
+    glStencilMask(0xFF);
+    glStencilFunc(GL_ALWAYS, 0, 0xFF);
+    glEnable(GL_DEPTH_TEST);
+    // ground.draw(*shader_program_, camera);
+    // trees.draw(*shader_program_, camera);
     // Swap the back buffer with the front buffer
     glfwSwapBuffers(window_);
     glfwPollEvents();
   }
   std::cout << "Deleting shaders.." << std::endl;
   shader_program_->Delete();
+  shader_outlining_program_->Delete();
   std::cout << "Deleting window.." << std::endl;
   glfwDestroyWindow(window_);
   glfwTerminate();
