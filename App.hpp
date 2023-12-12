@@ -16,6 +16,8 @@ class App {
   Shader* shader_program_;
   Shader* shader_outlining_program_;
   Shader* shader_grass_program_;
+  Shader* shader_frame_buffer_program_;
+  Shader* shader_skybox_;
   
   int window_width_;
   int window_height_;

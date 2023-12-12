@@ -214,10 +214,14 @@
         <Content Include="models\windows\diffuse.png" />
         <Content Include="models\windows\scene.bin" />
         <Content Include="models\windows\scene.gltf" />
+        <Content Include="shaders\framebuffer.frag" />
+        <Content Include="shaders\framebuffer.vert" />
         <Content Include="shaders\grass.frag" />
         <Content Include="shaders\grass.vert" />
         <Content Include="shaders\outlining.frag" />
         <Content Include="shaders\outlining.vert" />
+        <Content Include="shaders\skybox.frag" />
+        <Content Include="shaders\skybox.vert" />
         <Content Include="shaders\unlit.frag" />
         <Content Include="shaders\unlit.vert" />
         <Content Include="textures\dirt_ao.png"/>
